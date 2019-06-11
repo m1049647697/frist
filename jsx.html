@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jsx</title>
+    <script src="js/react.js"></script>
+    <script src="js/react-dom.js"></script>
+    <script src="js/browser.js"></script>
+</head>
+<body>
+<div id="root">
+
+</div>
+</body>
+</html>
+<script type="text/babel">
+    // let user ={
+    //     name:'张三',
+    //     a:1,
+    //     b:2,
+    // };
+    // var element = (
+    //     <div>
+    //         <h1>{user.name}</h1>
+    //         <h2>{user.a+user.b}</h2>
+    //
+    //     </div>
+    // )
+    // ReactDOM.render(
+    //     element,
+    //     document.getElementById('root')
+    // )
+    // ****************************************************
+    // function tick() {
+    //     const element = (
+    //         <div>
+    //             <h1>Hello,World!</h1>
+    //             <h2>{new Date().toLocaleString()}</h2>
+    //         </div>
+    //     )
+    //     ReactDOM.render(element,document.getElementById('root'))
+    // }
+    // setInterval(tick,1000)
+    // **********************************************************
+    // 1.javascript函数定义组件
+    /*function Welcome(a) {
+        return <h1>Hello,{a.b},{a.c}</h1>
+    }
+    ReactDOM.render(
+        //等同<Welcome/>
+        <Welcome b="World" c="React"></Welcome>,
+        document.getElementById('root')
+    )*/
+    // function Welcome(props) {
+    //     return <h1>Hello,{props.name}</h1>
+    // }
+    // function App() {
+    //     return <div>
+    //         <Welcome name="张三"></Welcome>
+    //         <Welcome name="李四"></Welcome>
+    //         <Welcome name="王五"></Welcome>
+    //     </div>
+    // }
+    // ReactDOM.render(
+    //     <App></App>,
+    //     document.getElementById('root')
+    // )
+    const data = {
+        txt:[],
+    }
+    function App(props) {
+        return <div>
+            <label>留言：</label><textarea id="textarea"></textarea>
+            <button onClick={getText}>添加留言</button>
+            <table>
+                <thead>
+                <tr>
+                    <th>留言</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    }
+    function getText() {
+        let txt = document.getElementById('textarea').value
+        let content=''
+        data.txt.push(txt)
+        document.getElementById('textarea').value=""
+        data.txt.forEach((items)=>{
+           content+=`<tr><td>${items}</td></tr>`;
+        })
+        document.getElementsByTagName('tbody')[0].innerHTML=content
+    }
+    ReactDOM.render(
+        <App txt={data.content}></App>,
+        document.getElementById('root')
+    )
+
+</script>

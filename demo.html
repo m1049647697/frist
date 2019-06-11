@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<label>请输入一个JSON数组：</label><input type="text" id="ipt1" onchange="fn1()">
+<select id="select">
+
+</select>
+<div id="div1">
+
+</div>
+<button onclick="fn2()" id="btn">按钮</button>
+</body>
+</html>
+<script>
+    function fn1(){
+        let str='';
+        let str1 ='';
+        let val = JSON.parse(document.getElementById('ipt1').value);
+        val.data.forEach(item=>{
+            str+=`<option>${item}</option>`
+            str1+=`<input type="checkbox" name="test" value=${item}>${item}<br>`
+        })
+        document.getElementById("select").innerHTML = str;
+        document.getElementById("div1").innerHTML = str1;
+    }
+    function fn2() {
+        let sel = document.getElementById('select').value;
+        let arr = [];
+        let che = document.getElementsByName('test');
+        console.log(che)
+        for(let i=0;i<che.length;i++){
+            if(che[i].checked){
+                arr.push(che[i].value)
+            }
+        }
+        console.log(arr)
+        if(arr.indexOf(sel)>-1){
+            document.getElementById('btn').style.borderColor = 'green'
+        }else {
+            document.getElementById('btn').style.borderColor = 'red'
+        }
+    }
+</script>

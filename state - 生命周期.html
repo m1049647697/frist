@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/react.js"></script>
+    <script src="js/react-dom.js" crossorigin></script>
+    <script src="js/browser.js"></script>
+</head>
+<body>
+<div id="root"></div>
+</body>
+</html>
+<script type="text/babel">
+   /* class Clock extends React.Component{
+        render(){
+            return (
+                <div>
+                    <h1>Hello,World!</h1>
+                    <h2>It is {this.props.date.toLocaleString()}</h2>
+                </div>
+            )
+        }
+    }
+    function tick(){
+        ReactDOM.render(
+            <Clock date={new Date()}/>,
+            document.getElementById('root')
+        )
+    }
+    setInterval(tick,1000)*/
+
+   class Clock extends React.Component{
+       constructor(props){
+           super(props);
+           this.state = {date:new Date()}
+       }
+//生命周期方法
+//componentDidMount() 方法会在组件已经被渲染到 DOM 中后运行
+       componentDidMount(){
+//当 Clock 组件第一次被渲染到 DOM 中的时候，就为其设置一个计时器。这在 React 中被称为“挂载（mount）”。
+        this.timerID = setInterval(
+            ()=>this.tick(),1000
+        )
+       }
+       componentWillUnmount(){
+//当 Clock 组件第一次被渲染到 DOM 中的时候，就为其设置一个计时器。这在 React 中被称为“挂载（mount）”。
+        clearInterval(this.tick())
+       }
+       tick(){
+            this.setState({
+                date:new  Date()
+            })
+       }
+       render(){
+           return(
+               <div>
+                   <h1>Hello,World!</h1>
+                   <h2>It is {this.state.date.toLocaleString()}</h2>
+               </div>
+           )
+       }
+   }
+   ReactDOM.render(
+       <Clock/>,
+       document.getElementById('root')
+   )
+</script>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/react.js"></script>
+    <script src="js/react-dom.js"></script>
+    <script src="js/browser.js"></script>
+</head>
+<body>
+<div id="root"></div>
+</body>
+</html>
+<script type="text/babel">
+    class Son extends React.Component{
+        constructor(props){
+            super(props);
+            this.a=this.a.bind(this)
+            this.b=this.b.bind(this)
+        }
+        a(a){
+            return a.map(item=>{
+                return <option>{item}</option>
+            })
+        }
+        //key={items}
+        b(a){
+            return a.map(items=>{
+                return <div>
+                    <input type="checkbox" name="test" value={items} />{items}
+                    </div>
+
+            })
+        }
+
+        render(){
+            return (<div>
+                <select id="select">
+                    {this.a(this.props.value.data)}
+                </select>
+                    {this.b(this.props.value.data)}
+            </div>)
+        }
+    }
+    class Boot extends React.Component{
+        constructor(props){
+            super(props);
+            this.state = {
+                val:''
+            };
+            this.change=this.change.bind(this);
+            this.renderSon=this.renderSon.bind(this)
+        }
+        change(){
+            let str = document.getElementById("input").value;
+            this.setState({
+                val:JSON.parse(str)
+            })
+            console.log(this.state.val)
+        }
+/*        isJSON(str){
+            try {
+                JSON.parse(str);
+            }catch (e) {
+                return false
+            }
+            return true
+        }*/
+        renderSon(){
+            if(this.state.val!==""){
+                return <Son value={this.state.val} />
+            }
+            return null
+        }
+        //{"data":["张三","李四","王五"]}
+        render(){
+            return(
+                <div>
+                    <label>请输入JSON字符串</label><input id="input" onChange={this.change}></input>
+                    <div>{this.renderSon(this.state.val)}</div>
+                    <button onClick={f} id="btn">提交</button>
+                </div>
+            )
+        }
+    }
+    ReactDOM.render(
+        <Boot />,
+        document.getElementById('root')
+    )
+    function f() {
+        let sel = document.getElementById('select').value;
+        let che = document.getElementsByName('test')
+        let arr = [];
+        for(let i=0;i<che.length;i++){
+            if(che[i].checked){
+                arr.push(che[i].value)
+            }
+        }
+        if(arr.indexOf(sel)>-1){
+            document.getElementById('btn').style.borderColor = 'green'
+        }else {
+            document.getElementById('btn').style.borderColor = 'red'
+        }
+    }
+</script>

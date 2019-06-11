@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/react.js"></script>
+    <script src="js/react-dom.js"></script>
+    <script src="js/browser.js"></script>
+</head>
+<body>
+<div id="root"></div>
+</body>
+</html>
+<script type="text/babel">
+    /*function UserGreeting(props) {
+        return <h1 onClick={tick}> Welcome back!</h1>
+    }
+    function GuestGreeting(props) {
+        return <h1 onClick={tick}>Please sign up.</h1>
+    }
+
+    function Greeting(props) {
+        const isLoggedIn = props.isLoggedIn;
+        function tick() {
+            this.props.isLoggedIn = !this.props.isLoggedIn
+        }
+
+    }*/
+    // ----------------------------------------------------------------------------------
+    /*function UserGreeting(props) {
+        return <h1 onClick={props.onClick}> Welcome back!</h1>
+    }*/
+    class UserGreeting extends React.Component {
+        render() {
+            return (
+                <h1 onClick={this.props.onClick}> Welcome back!</h1>
+            )
+        }
+    }
+    function GuestGreeting(props) {
+        return <h1 onClick={props.onClick}>Please sign up.</h1>
+    }
+
+    class Greeting extends React.Component{
+        constructor(props){
+            super(props)
+            this.Clickfalse = this.Clickfalse.bind(this);
+            this.Clicktrue = this.Clicktrue.bind(this);
+            this.state= {isLoggedIn:false}
+        }
+        Clickfalse(){
+            this.setState(
+                {isLoggedIn:true}
+            )
+        }
+        Clicktrue(){
+            this.setState(
+                {isLoggedIn:false}
+            )
+        }
+        render(){
+            console.log(this.state.isLoggedIn)
+            const isLoggedIn = this.state.isLoggedIn;
+            if(isLoggedIn){
+                return <UserGreeting onClick={this.Clicktrue}/>
+            }
+            return <GuestGreeting onClick={this.Clickfalse}/>
+        }
+    }
+    ReactDOM.render(
+        <Greeting />,
+        document.getElementById('root')
+    )
+</script>
