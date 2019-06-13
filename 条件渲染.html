@@ -45,26 +45,20 @@
         constructor(props){
             super(props)
             this.Clickfalse = this.Clickfalse.bind(this);
-            this.Clicktrue = this.Clicktrue.bind(this);
             this.state= {isLoggedIn:false}
         }
         Clickfalse(){
             this.setState(
-                {isLoggedIn:true}
-            )
-        }
-        Clicktrue(){
-            this.setState(
-                {isLoggedIn:false}
+                {isLoggedIn:!this.state.isLoggedIn}
             )
         }
         render(){
             console.log(this.state.isLoggedIn)
             const isLoggedIn = this.state.isLoggedIn;
             if(isLoggedIn){
-                return <UserGreeting onClick={this.Clicktrue}/>
+                return <UserGreeting onClick={this.Clickfalse}/>
             }
-            return <GuestGreeting onClick={this.Clickfalse}/>
+            return <GuestGreeting onClick={this.Clickfalse} />
         }
     }
     ReactDOM.render(

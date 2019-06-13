@@ -29,7 +29,6 @@
                 return <div>
                     <input type="checkbox" name="test" value={items} />{items}
                     </div>
-
             })
         }
 
@@ -46,7 +45,8 @@
         constructor(props){
             super(props);
             this.state = {
-                val:''
+                val:'',
+                isJSON:true
             };
             this.change=this.change.bind(this);
             this.renderSon=this.renderSon.bind(this)
