@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/react.js"></script>
+    <script src="js/react-dom.js"></script>
+    <script src="js/browser.js"></script>
+    <script src="js/prop-types.js"></script>
+
+</head>
+<body>
+<div id="root"></div>
+</body>
+</html>
+<script type="text/babel">
+    class App extends React.Component{
+        constructor(props){
+            super(props)
+            this.state = {
+                    opacity:1
+            }
+            this.handleClick = this.handleClick.bind(this)
+        }
+        componentDidMount(){
+            this.interval = setInterval(function () {
+                console.log("定时器正在执行...")
+                let {opacity} = this.state
+                opacity -=0.01;
+                if(opacity<=0){
+                    opacity = 1
+                }
+                this.setState({
+                    opacity
+                })
+            }.bind(this),20)
+        }
+        componentWillUnmount(){
+            clearInterval(this.interval)
+        }
+        handleClick(){
+            ReactDOM.unmountComponentAtNode(document.getElementById('root'))
+        }
+        render(){
+            const {opacity} = this.state;
+            return(
+                <div>
+                    <h1 style={{opacity}}>react 真难</h1>
+                    <button onClick={this.handleClick}>不学了</button>
+                </div>
+            )
+        }
+    }
+
+    ReactDOM.render(<App/>,document.getElementById('root'))
+</script>

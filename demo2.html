@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/react.js"></script>
+    <script src="js/react-dom.js"></script>
+    <script src="js/browser.js"></script>
+    <script src="js/prop-types.js"></script>
+</head>
+<body>
+<div id="root"></div>
+</body>
+</html>
+<script type="text/babel">
+    class App extends React.Component{
+        constructor(props){
+            super(props)
+            this.state = {
+                pwd:''
+            }
+            this.nameInput = React.createRef()
+            this.handleSubmit=this.handleSubmit.bind(this)
+            this.handleChange = this.handleChange.bind(this)
+        }
+        handleSubmit(e){
+            e.preventDefault()
+            const name = this.nameInput.current.value
+            const {pwd} = this.state
+            alert(`你提交的用户名为${name},密码为${pwd}`)
+        }
+        handleChange(e){
+            const pwd = e.target.value;
+            this.setState({
+                pwd
+            })
+        }
+        render(){
+            const {pwd} = this.state
+            return (
+                <div>
+                    <form onSubmit={this.handleSubmit}>
+                        用户名：<input type="text" ref={this.nameInput}/>
+                        密码：<input type="password" value={pwd} onChange={this.handleChange}/>
+                        <input type="submit" value="提交"/>
+                    </form>
+                </div>
+            )
+        }
+    }
+    ReactDOM.render(<App/> ,document.getElementById('root'))
+</script>

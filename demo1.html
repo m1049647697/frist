@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/react.js"></script>
+    <script src="js/react-dom.js"></script>
+    <script src="js/browser.js"></script>
+    <script src="js/prop-types.js"></script>
+</head>
+<body>
+<div id="root"></div>
+</body>
+</html>
+<script type="text/babel">
+    class App extends React.Component{
+        constructor(props){
+            super(props);
+            this.state={
+                Todos:["吃饭","睡觉","敲代码"]
+            }
+            this.addTodo = this.addTodo.bind(this)
+        }
+        addTodo(todo){
+            let {Todos} = this.state;
+            Todos.unshift(todo);
+            this.setState({
+                Todos
+            })
+        }
+        render(){
+            let {Todos} = this.state;
+            return(
+                <div>
+                    <h1>列表添加</h1>
+                    <Add index={Todos.length} add ={this.addTodo}/>
+                    <List todos={Todos} />
+                </div>
+            )
+        }
+    }
+
+    class Add extends React.Component{
+        constructor(props){
+            super(props);
+            this.input = React.createRef();
+            this.add=this.add.bind(this)
+        }
+        add(){
+            const val = this.input.current.value.trim();
+            this.props.add(val);
+            this.input.current.value=""
+        }
+        render(){
+            return(
+                <div>
+                    <input type="text" ref={this.input}/>
+                    <button onClick={this.add}>Add #{this.props.index+1}</button>
+                </div>
+            )
+        }
+    }
+    Add.protoTypes = {
+        add:PropTypes.func,
+        index:PropTypes.number
+    }
+
+    class List extends React.Component{
+        render(){
+            return(
+                <ul>
+                    {this.props.todos.map((todo,index)=><li key={index}>{todo}</li>)}
+                </ul>
+            )
+        }
+    }
+    List.protoTypes = {
+        todos:PropTypes.array
+    }
+    ReactDOM.render(<App/>,document.getElementById('root'))
+</script>
