@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/react.js"></script>
+    <script src="js/react-dom.js"></script>
+    <script src="js/browser.js"></script>
+</head>
+<body>
+<div id="root"></div>
+</body>
+</html>
+<script type="text/babel">
+    class Myconponent extends React.Component{
+        constructor(props){
+            super(props)
+        this.b = React.createRef()
+        this.handleClick = this.handleClick.bind(this)
+        }
+        handleClick(){
+            //第一个inputDOM节点
+            console.log(this.refs.content);
+            //第二个inputDOM节点
+            console.log(this.a);
+            //第三个inputDOM节点
+            console.log(this.b.current);
+            console.log(this.refs)
+        }
+        render(){
+            return (<div>
+                <input  type="text" ref="content"/>
+                <input type="text" ref={input=>this.a = input}/>
+                <input type="text" ref={this.b}/>
+                <button onClick={this.handleClick}>提示输入</button>
+                <input type="text"/>
+            </div>)
+        }
+    }
+   //**************************************************************
+    //回调Refs
+    //父组件将自己的Refs回调函数作为props传给子组件
+    //子组件将这个props作为自己ref属性的值
+    //此时父组件中的this.aaa为子组件中的button元素对应的DOM节点
+    function Myconponent2(props) {
+        return(
+            <button ref={props.button}>
+                点我
+            </button>
+        )
+    }
+    class Myconponent3 extends React.Component{
+        constructor(props){
+            super(props);
+            this.aaa = null;
+            this.setRef = element=>{
+                this.aaa = element
+            }
+        }
+        componentDidMount(){
+            console.log(this.aaa)
+            this.aaa.style.backgroundColor="red"
+        }
+        render(){
+            return <Myconponent2 button={this.setRef}/>
+        }
+    }
+    class Myconponent4 extends React.Component{
+        constructor(props){
+            super(props)
+            this.button = React.createRef()
+        }
+        handleClick(){
+            this.button.current.style.width = "150px"
+        }
+        render() {
+            return (
+                <div>
+                    <button ref={this.button}>点我2</button>
+                </div>
+            );
+        }
+    }
+    class Myconponent5 extends React.Component{
+        constructor(props){
+            super(props)
+            this.button = React.createRef();
+        }
+        componentDidMount(){
+            this.button.current.handleClick()
+            console.log(this.button.current)
+        }
+        render() {
+            return (<div>
+                    <Myconponent4 ref={this.button}/>
+                </div>
+
+            );
+        }
+    }
+    ReactDOM.render(
+        <div>
+            <Myconponent />
+            <Myconponent3 />
+            <Myconponent5/>
+        </div>,
+
+        document.getElementById('root')
+    )
+</script>

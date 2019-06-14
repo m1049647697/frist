@@ -15,7 +15,7 @@
     class Son extends React.Component{
         constructor(props){
             super(props);
-            this.a=this.a.bind(this)
+            this.a=this.a.bind(this);
             this.b=this.b.bind(this)
         }
         a(a){
@@ -46,37 +46,44 @@
             super(props);
             this.state = {
                 val:'',
-                isJSON:true
+                isJSON:true,
+                str:""
             };
             this.change=this.change.bind(this);
-            this.renderSon=this.renderSon.bind(this)
+            this.renderSon=this.renderSon.bind(this);
         }
-        change(){
-            let str = document.getElementById("input").value;
-            this.setState({
-                val:JSON.parse(str)
-            })
-            console.log(this.state.val)
-        }
-/*        isJSON(str){
-            try {
-                JSON.parse(str);
-            }catch (e) {
-                return false
+        change(e){
+            let str = e.target.value;
+            if(this.isJSON(str)){
+                e.target.value=="";
+                this.setState({
+                    val:JSON.parse(str)
+                })
+            }else {
+                this.setState({
+                    str:"格式错误"
+                })
             }
-            return true
-        }*/
+        }
+        isJSON(str){
+                if(JSON.parse(str)=="object"&&typeof str !=="number"||"boolean") {
+                    return true
+                }
+                return false
+        }
         renderSon(){
-            if(this.state.val!==""){
+            if(!(this.state.val=="")){
                 return <Son value={this.state.val} />
             }
             return null
         }
         //{"data":["张三","李四","王五"]}
         render(){
+console.log(this.state.val)
             return(
                 <div>
-                    <label>请输入JSON字符串</label><input id="input" onChange={this.change}></input>
+                    <label>请输入JSON字符串</label><input id="input" onBlur={this.change}></input>
+                    <span>{this.state.str}</span>
                     <div>{this.renderSon(this.state.val)}</div>
                     <button onClick={f} id="btn">提交</button>
                 </div>
@@ -89,7 +96,7 @@
     )
     function f() {
         let sel = document.getElementById('select').value;
-        let che = document.getElementsByName('test')
+        let che = document.getElementsByName('test');
         let arr = [];
         for(let i=0;i<che.length;i++){
             if(che[i].checked){
